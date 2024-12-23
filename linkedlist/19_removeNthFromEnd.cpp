@@ -33,4 +33,27 @@ class Solution {
         return head;
 
     }
-};
+    // 双指针法，快慢指针
+    ListNode* _removeNthFromEnd(ListNode* head, int n) {
+        ListNode* dummy_head = new ListNode(0);
+        dummy_head->next = head;
+        ListNode* fast = dummy_head;
+        ListNode* slow = dummy_head;
+        n++;
+        while (n-- && fast != nullptr) {
+            fast = fast->next;
+        }
+        while (fast !=nullptr) {
+            fast = fast->next;
+            slow = slow->next;
+        }
+        ListNode* temp = slow->next;
+        slow->next = slow->next->next;
+        delete(temp);
+
+        head = dummy_head->next;
+        delete(dummy_head);
+        return head;
+    }
+    
+};  
