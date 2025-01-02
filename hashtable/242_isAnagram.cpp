@@ -1,5 +1,4 @@
 #include <iostream>
-<<<<<<< HEAD
 // using namespace std;
 
 class Solution {
@@ -18,13 +17,4 @@ public:
 
         return true;
     }
-=======
-
-using namespace std;
-
-class Solution {
-    bool isAnagram(string s, string t) [
-        
-    ]
->>>>>>> 7c6ba34a94b86fc79e9ff055cce4d10ff153cc2c
 };
