@@ -27,72 +27,53 @@ public:
     // }
 
     // next array
+public:
     int strStr(string haystack, string needle) {
-        
-        int j  = 0;
-        if (needle.size() == 0) return 0;
-        
-        int* next;
-        getnext(next, needle);
+        // int next[needle.size()];
+        // int* next = new int[needle.size()]; // 动态分配内存，需要手动释放 delete[] next;
+        int* next = (int*)malloc(needle.size() * sizeof(int)); // 动态分配内存，需要手动释放 free(next);
+        getNext(next, needle);
+        int j = 0;
         for (size_t i = 0; i < haystack.size(); i++) {
-            while (haystack[i] != needle[j]) {
-                j = next[i - 1];
+            while (j > 0 &&  haystack[i] != needle[j]) {
+                j = next[j - 1];
             }
             if (haystack[i] == needle[j]) {
                 j++;
             }
-            if (j == needle.size() - 1) {
-                return (i - needle.size() + 1);
-            }
+            if (j == needle.size()) return i - needle.size() + 1;
         }
-
+        free(next);
         return -1;
     }
-    // needle[i] != needle[j]时j需要回退
-    void getnext(int* next, string s) {
+
+    void getNext(int* next, string s) {
         int j = 0;
         next[0] = j;
-
-        for (int i = 1; i < s.size(); i++) {
-            while (j > 0 && s[i] !=  s[j]) {
+        for (size_t i = 1; i < s.size(); i++) {
+            while (j >0 && s[i] != s[j]) {
                 j = next[j - 1];
             }
-
             if (s[i] == s[j]) {
                 j++;
             }
             next[i] = j;
         }
     }
-
-    void _getNext(int* next, string needle) {
-        int j = -1;
-        next[0] = j;
-        for (int i = 1; i < needle.size(); i++) {
-            // “遇见冲突看next的前一位”为循环不变量，j根据已有的next数组进行回退
-            while (j >= 0 && needle[i] != needle[j + 1]) {
-                j = next[j];
-            } 
-            if (needle[i] == needle[j + 1]) {
-                j++;
-            }
-            next[i] = j;
-        }
-    }
-
-    
-private:
-
-
 };
 
 int main(int argc, char *argv[])
 {
-    std::string haystack = "hello";
-    std::string needle = "l";
+    // string haystack = "leetcode", needle = "leeto";
+    string haystack = "abcabcabcabcabc";
+    int next[haystack.size()];
     Solution solution;
-    cout << "common index in haystack: " << solution.strStr(haystack, needle) << endl;
+    solution.getNext(next, haystack);
+    cout << "next array:\n";
+    for (int _ : next) {
+        cout << _ << " ";
+    }
+    // cout << "prefix index: " << solution.strStr(haystack, needle) << endl;
     /* code */
-
     return 0;
 }
