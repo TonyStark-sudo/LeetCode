@@ -3,7 +3,6 @@
 
 using namespace std;
 class Solution {
-public:
     // two for
     // int _strStr(string haystack, string needle) {
     //     size_t h_size = haystack.size();
