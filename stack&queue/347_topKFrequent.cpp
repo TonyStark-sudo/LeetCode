@@ -1,6 +1,7 @@
 #include <vector>
 #include <unordered_map>
 #include <queue>
+#include <iostream>
 
 using namespace std;
 
@@ -42,3 +43,17 @@ public:
 
     }
 };
+
+int main(int argc, char *argv[])
+{
+
+    std::pair<int, int> p1 = {1, 2};
+
+    std::pair<int, int> p2 = {2, 4};
+    Solution solution;
+    Solution::mycomparison mycompare;
+
+    std::cout << mycompare(p1, p2) << std::endl;
+    /* code */
+    return 0;
+}
