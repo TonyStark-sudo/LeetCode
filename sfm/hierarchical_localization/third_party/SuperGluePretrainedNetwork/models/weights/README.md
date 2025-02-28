@@ -1,1 +1,0 @@
-# please download weights manually from s3://zsp/weights
