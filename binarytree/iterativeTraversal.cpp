@@ -1,5 +1,6 @@
 #include <vector>
 #include <stack>
+#include <algorithm>
 
 struct TreeNode {
     int val;
@@ -42,6 +43,22 @@ std::vector<int> inorderTraversal(TreeNode* root) {
         }
 
     }
-
     return result; 
+}
+
+std::vector<int> postorderTraversal(TreeNode* root) {
+    std::vector<int> result;
+    std::stack<TreeNode*> st;
+    if (root == NULL) return {};
+    st.push(root);
+    while (!st.empty()) {
+        TreeNode* node = st.top();
+        st.pop();
+        result.push_back(node->val);
+
+        if (node->left != nullptr) st.push(node->left);
+        if (node->right != nullptr) st.push(node->right);
+    }
+    reverse(result.begin(), result.end());
+    return result;
 }
