@@ -2,6 +2,7 @@
 #include <cub/cub.cuh>
 #include <cub/device/device_radix_sort.cuh>
 
+// 该核函数将3d点进行投影, 得到其在图像上的像素坐标，根据像素坐标找到该点在图像上的颜色，和在label_img上的label
 __global__ void project_cuda(double* rotation, double* translation,
                              unsigned char* image, unsigned char* image_mask,
                              unsigned char* image_seg,
@@ -42,13 +43,20 @@ __global__ void project_cuda(double* rotation, double* translation,
     unsigned char b = image[3 * pixel_index];
     unsigned char g = image[3 * pixel_index + 1];
     unsigned char r = image[3 * pixel_index + 2];
+
+    // 因为rgb初始化为0了
     rgbs[3 * idx] += r;
     rgbs[3 * idx + 1] += g;
     rgbs[3 * idx + 2] += b;
     rgb_counts[idx] += 1;
+
+    // image_seg[pixel_index]是该像素上对应的label
+    // label_map[static_cast<int>(image_seg[pixel_index])]是
+
+    //label_counts 用来统计每个3D点， 有无label的情况
     label_counts[label_map[static_cast<int>(image_seg[pixel_index])]][idx] += 1;
 }
-
+// 核函数，将图像信息投影到3d点上
 __global__ void project_cuda_nearest(double* rotation, double* translation,
                              unsigned char* image, unsigned char* image_mask,
                              unsigned char* image_seg,
@@ -477,6 +485,22 @@ void DistributeProjector::Project(double* h_rotation, double* h_translation,
     h_label_counts[5] = label5_counts_;
     cudaMemcpy(label_counts, h_label_counts, 6 * sizeof(int*), cudaMemcpyHostToDevice);
     // std::cout << "============ end memery malloc and copy =============" << std::endl;
+    /*
+    label_map_[7] = 1;
+    label_map_[8] = 1;
+    label_map_[23] = 1;
+    label_map_[24] = 1;
+    label_map_[2] = 2;
+    label_map_[3] = 2;
+    label_map_[4] = 2;
+    label_map_[5] = 2;
+    label_map_[6] = 2;
+    label_map_[9] = 2;
+    label_map_[13] = 3;
+    label_map_[14] = 3;
+    label_map_[41] = 3;
+    label_map_[29] = 5;
+    */
     project_cuda<<< (size_ + 255) / 256, 256 >>> (rotation, translation,
                                                   image, image_mask, image_seg,
                                                   height, width, K,
