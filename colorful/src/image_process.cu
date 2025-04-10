@@ -392,6 +392,7 @@ void ImageProcess::DepthImage(float* h_bev_points, int* h_point_size,
     cudaMemcpy(bev_mask, h_bev_mask, (*h_height * *h_width) * sizeof(bool), cudaMemcpyHostToDevice);
     cudaMemcpy(uvs, h_uvs, 2 * uv_length * sizeof(int), cudaMemcpyHostToDevice);
     cudaMemset(bev_mask_new, 0, (*h_width) * (*h_height) * sizeof(bool));
+    // 启降采样点云数量的线程
     point_index_2_image_index<<< (*h_point_size + 255) / 256, 256 >>>(bev_points, point_size, width, height, scale_x, scale_y, pixel_index, points_index);
     // test<<< 1, 1 >>>(pixel_index, points_index);
     cudaDeviceSynchronize();

@@ -376,6 +376,23 @@ void Projector::ProjectColorful() {
     }
 
     // 初始化一个DistributeProjector对象， 用于CUDA投影
+    // h_points是bev路面点的三维坐标、h_rgbs是每一个bev三维点的颜色、points_size是路面点的数量
+    // label_map_ 是一个映射关系：
+    // label_map_[7] = 1;
+    // label_map_[8] = 1;
+    // label_map_[23] = 1;
+    // label_map_[24] = 1;
+    // label_map_[2] = 2;
+    // label_map_[3] = 2;
+    // label_map_[4] = 2;
+    // label_map_[5] = 2;
+    // label_map_[6] = 2;
+    // label_map_[9] = 2;
+    // label_map_[13] = 3;
+    // label_map_[14] = 3;
+    // label_map_[41] = 3;
+    // label_map_[29] = 5;
+    // h_labels 是用于映射labels
     DistributeProjector distribute_projector(h_points, h_rgbs, h_counts, points_size, label_map_, h_labels);
     float *points_m = new float[3 * distribute_projector.size_]; 
     double *rotation_mg = mat3x3_to_pointer(pose_mg.q.toRotationMatrix());
