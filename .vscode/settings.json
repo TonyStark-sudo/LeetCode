@@ -67,6 +67,9 @@
         "shared_mutex": "cpp",
         "cinttypes": "cpp",
         "typeindex": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "codecvt": "cpp",
+        "forward_list": "cpp",
+        "valarray": "cpp"
     }
 }
