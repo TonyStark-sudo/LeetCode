@@ -1,4 +1,6 @@
 #include <vector>
+#include <memory>
+#include <iostream>
 
 using namespace std;
 
@@ -22,8 +24,17 @@ public:
         for (int i = 0; i < nums.size(); i++) {
             sum += nums[i];
             result = max(sum, result);
+            std::cout << "sum = " << sum << ", result = " << result << std::endl;
             if (sum < 0) sum = 0;
         }
         return result;
     }
 };
+
+int main(int argc, char const *argv[])
+{
+    std::vector<int> nums{-2, 1, -3, 4, -1, 2, 1, -5, 4};
+    std::shared_ptr<Solution> solution_ptr = std::make_shared<Solution>();
+    solution_ptr->maxSubArray(nums);    
+    return 0;
+}
