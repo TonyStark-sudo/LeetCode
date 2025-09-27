@@ -43,3 +43,15 @@ public:
         return prev;
     }
 };
+
+class SolutionRecursion {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if (!head || !head->next) return head;
+        ListNode* newHead = reverseList(head->next);
+        // newHead->next = head;
+        head->next->next = head;
+        head->next = nullptr;
+        return newHead;
+    }
+};
