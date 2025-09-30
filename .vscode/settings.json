@@ -83,6 +83,10 @@
         "print": "cpp",
         "queue": "cpp",
         "stack": "cpp",
-        "__tree": "cpp"
+        "__tree": "cpp",
+        "csetjmp": "cpp",
+        "csignal": "cpp",
+        "charconv": "cpp",
+        "cuchar": "cpp"
     }
 }
