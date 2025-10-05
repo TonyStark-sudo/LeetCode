@@ -15,7 +15,7 @@ public:
         int j = 0;        
         for (int i = 0; i < p.size(); i++) {
             while (p[i] == '*') {
-                if (s[j] = s[j + 1]) {
+                if (s[j] == s[j + 1]) {
                     j++;
                 }
                 else break;       

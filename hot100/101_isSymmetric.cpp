@@ -22,7 +22,7 @@ void traversalRight(TreeNode* root, std::vector<int>& vec) {
 }
 
 
-class Solution {
+class MySolution {
 public:
     void traversalLeft(TreeNode* root, std::vector<int>& vec) {
         if (root == NULL) return;
@@ -93,5 +93,19 @@ public:
         if (root == NULL) return true;
         return compare(root->left, root->right);
 
+    }
+};
+
+class Solution {
+private:
+    bool check(TreeNode* p, TreeNode* q) {
+        if (!q && !p) return true;
+        if (!q || !p) return false;
+        if (q->val != p->val) return false;
+        return check(p->left, q->right) && check(q->right, p->left);
+    }
+public:
+    bool isSymmetric(TreeNode* root) {
+        return check(root->left, root->right);
     }
 };
